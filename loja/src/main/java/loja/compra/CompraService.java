@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 import loja.client.fornecedor.FornecedorClient;
 import loja.client.fornecedor.dto.FornecedorInfoDTO;
@@ -24,8 +25,7 @@ public class CompraService {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(CompraService.class);
 	
-//	@Autowired
-//	private RestTemplate client;
+	private long inicio;
 	
 	@Autowired
 	private FornecedorClient fornecedorClient;
@@ -49,8 +49,41 @@ public class CompraService {
 		return compraRepository.findById(id).orElse(new Compra());
 	}
 	
-	@HystrixCommand(threadPoolKey = "realizaCompraThreadPool", fallbackMethod = "realizaCompraFallback")
+	@HystrixCommand(threadPoolKey = "realizaCompraThreadPool", 
+			fallbackMethod = "realizaCompraFallback", 
+			commandProperties = {@HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="2000")})
+	public Compra reprocessar(CompraDTO compra) {
+		Compra compraSalva = compraRepository.findById(compra.getCompraId()).orElse(null);
+		
+		if(compraSalva == null) {
+			return realizaCompra(compra);
+		}
+		
+		FornecedorInfoDTO fornecedor;
+		
+		switch(compraSalva.getSituacao()) {
+		case RECEBIDO:
+			fornecedor = fornecedorClient.getInfo(compra.getEndereco().getEstado());
+			realizaPedido(compraSalva, compra);
+			reservaEntrega(compraSalva, fornecedor, compra);
+			break;
+		case PEDIDO_REALIZADO:
+			fornecedor = fornecedorClient.getInfo(compra.getEndereco().getEstado());
+			reservaEntrega(compraSalva, fornecedor, compra);
+			break;
+		default:
+			break;
+		}
+		
+		return compraSalva;
+	}
+	
+	@HystrixCommand(threadPoolKey = "realizaCompraThreadPool", 
+					fallbackMethod = "realizaCompraFallback", 
+					commandProperties = {@HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="2000")})
 	public Compra realizaCompra(CompraDTO compra) {
+		inicio = System.currentTimeMillis();
+		
 		LOG.info("Inicia compra!");
 		
 		Compra compraSalva = new Compra();
@@ -61,15 +94,26 @@ public class CompraService {
 		
 		FornecedorInfoDTO fornecedor = fornecedorClient.getInfo(compra.getEndereco().getEstado());
 		
+		realizaPedido(compraSalva, compra);
+		
+		reservaEntrega(compraSalva, fornecedor, compra);
+		
+		LOG.info("Compra realizada com sucesso! Tempo de execução em segundos:"+((System.currentTimeMillis() - inicio) / 1000));
+		return compraSalva;
+	}
+	
+	private void realizaPedido(Compra compraSalva, CompraDTO compra) {	
 		PedidoInfoDTO pedido = fornecedorClient.realizaPedido(compra.getItens());
 		compraSalva.setPedidoId(pedido.getId());
 		compraSalva.setTempoDePreparo(pedido.getTempoDePreparo());
 		compraSalva.setSituacao(CompraSituacao.PEDIDO_REALIZADO);
 		compraRepository.save(compraSalva);
-		
+	}
+	
+	private void reservaEntrega(Compra compraSalva, FornecedorInfoDTO fornecedor, CompraDTO compra) {
 		EntregaDTO entrega = new EntregaDTO();
-		entrega.setPedidoId(pedido.getId());
-		entrega.setDataParaEntrega(LocalDate.now().plusDays(pedido.getTempoDePreparo()));
+		entrega.setPedidoId(compraSalva.getPedidoId());
+		entrega.setDataParaEntrega(LocalDate.now().plusDays(compraSalva.getTempoDePreparo()));
 		entrega.setEnderecoOrigem(fornecedor.getEndereco());
 		entrega.setEnderecoDestino(compra.getEndereco().toString());
 		
@@ -78,17 +122,15 @@ public class CompraService {
 		compraSalva.setVoucher(voucher.getNumero());
 		compraSalva.setSituacao(CompraSituacao.RESERVA_ENTREGA_REALIZADA);
 		compraRepository.save(compraSalva);
-		
-		LOG.info("Compra realizada com sucesso!");
-		
-		return compraSalva;
 	}
 	
 	public  Compra realizaCompraFallback(CompraDTO compra) {
 		if(compra.getCompraId() != null) {
+			LOG.info("Tempo de execução em segundos:"+((System.currentTimeMillis() - inicio) / 1000));	
 			return compraRepository.findById(compra.getCompraId()).get();
 		}
-			
+		
+		LOG.info("Tempo de execução em segundos:"+((System.currentTimeMillis() - inicio) / 1000));
 		Compra compraFallback = new Compra();
 		compraFallback.setEnderecoDestino(compra.getEndereco().toString());
 		return compraFallback;

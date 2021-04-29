@@ -22,7 +22,6 @@ public class PedidoService {
 	private ProdutoRepository produtoRepository;
 
 	public Pedido realizaPedido(List<PedidoItemDTO> itens) {
-		
 		if(itens == null) {
 			return null;
 		}
@@ -37,8 +36,7 @@ public class PedidoService {
 		return this.pedidoRepository.findById(id).orElse(new Pedido());
 	}
 
-	private List<PedidoItem> toPedidoItem(List<PedidoItemDTO> itens) {
-		
+	private List<PedidoItem> toPedidoItem(List<PedidoItemDTO> itens) {		
 		List<Long> idsProdutos = itens
 				.stream()
 				.map(item -> item.getId())

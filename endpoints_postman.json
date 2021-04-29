@@ -1,0 +1,161 @@
+{
+	"variables": [],
+	"info": {
+		"name": "endpoints",
+		"_postman_id": "f9a5c872-ae85-784e-7e34-f4c27b05a7e4",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Consulta apps eureka",
+			"request": {
+				"url": "http://localhost:8761/eureka/apps",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta config no github",
+			"request": {
+				"url": "http://localhost:8888/fornecedor/default",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Carrega informações pelo estado",
+			"request": {
+				"url": "http://localhost:8081/info/SP",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Realiza compra",
+			"request": {
+				"url": "http://localhost:8080/compras",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer dc6d5f0c-3b93-4644-b1fc-60c3e17a4749",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"itens\": [\n\t\t{\n\t\t\t\"id\": 1,\n\t\t\t\"quantidade\": 15\n\t\t},\n\t\t{\n\t\t\t\"id\": 2,\n\t\t\t\"quantidade\": 25\n\t\t}\n\t],\n\t\"endereco\": {\n\t\t\"logradouro\": \"Rua José Pinheiro\",\n\t\t\"tipo\":\"Rua\",\n\t\t\"numero\": 8923,\n\t\t\"estado\": \"SP\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Carrega uma compra",
+			"request": {
+				"url": "http://localhost:8080/compras/19",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta rotas api gateway",
+			"request": {
+				"url": "http://localhost:5555/actuator/routes",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Autenticação",
+			"request": {
+				"url": "localhost:8088/oauth/token",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic bG9qYTpsb2phcHdk",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "scope",
+							"value": "web",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "lucas",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "lucaspwd",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Reprocessa compra",
+			"request": {
+				"url": "http://localhost:8080/compras/5/reprocessamento",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer dc6d5f0c-3b93-4644-b1fc-60c3e17a4749",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"itens\": [\n\t\t{\n\t\t\t\"id\": 1,\n\t\t\t\"quantidade\": 15\n\t\t},\n\t\t{\n\t\t\t\"id\": 2,\n\t\t\t\"quantidade\": 25\n\t\t}\n\t],\n\t\"endereco\": {\n\t\t\"logradouro\": \"Rua José Pinheiro\",\n\t\t\"tipo\":\"Rua\",\n\t\t\"numero\": 8923,\n\t\t\"estado\": \"SP\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
