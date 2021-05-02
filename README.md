@@ -2,7 +2,7 @@
 
 Como rodar:
 
-- Criar 3 bancos de dados com os nomes fornecedor, transportador, loja 
+- Criar 3 bancos de dados mysql com os nomes fornecedor, transportador, loja de acordo com o que está especificado no repositório: https://github.com/lucasouza555/microsservicos-configs 
 
 - Rodar os projetos auth, config-server, eureka-server, zuul primeiro, depois rodar o loja, transportador, fornecedor
 
