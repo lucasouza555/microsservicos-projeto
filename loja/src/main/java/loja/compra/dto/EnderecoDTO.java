@@ -34,6 +34,6 @@ public class EnderecoDTO {
 	
 	@Override
 	public String toString() {
-		return "EnderecoDTO [logradouro=" + logradouro + ", tipo=" + tipo + ", numero=" + numero + "]";
+		return tipo+" "+logradouro +", "+ numero + ", "+estado;
 	}
 }

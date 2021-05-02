@@ -1,4 +1,4 @@
-package fornecedor;
+package transportador;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,9 +11,9 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter{
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/pedidos", "/pedidos/")
+			.antMatchers(HttpMethod.POST, "/entrega", "/entrega/")
 			.hasRole("USER")
-			.antMatchers(HttpMethod.DELETE, "/pedidos/{id}","/pedidos/{id}/")
+			.antMatchers(HttpMethod.DELETE, "/entrega/{id}", "/entrega/{id}/")
 			.hasRole("USER");
 	}
 }

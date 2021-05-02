@@ -11,9 +11,11 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter{
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/compras")
+			.antMatchers(HttpMethod.POST, "/compras", "/compras/")
 			.hasRole("USER")
-			.antMatchers(HttpMethod.PUT, "/compras/{id}/reprocessamento")
+			.antMatchers(HttpMethod.DELETE, "/compras/{id}","/compras/{id}/")
+			.hasRole("USER")
+			.antMatchers(HttpMethod.PUT, "/compras/{id}/reprocessamento", "/compras/{id}/reprocessamento/")
 			.hasRole("USER");
 	}
 }

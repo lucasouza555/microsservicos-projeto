@@ -1,11 +1,14 @@
 package transportador.entrega.modelo;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Entrega {
@@ -20,10 +23,11 @@ public class Entrega {
 	
 	private LocalDate previsaoParaEntrega;
 	
-	private String enderecoOrigem;
-	
 	private String enderecoDestino;
-
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "entrega")
+	private List<EntregaOrigem> origens;
+	
 	public LocalDate getDataParaBusca() {
 		return dataParaBusca;
 	}
@@ -38,14 +42,6 @@ public class Entrega {
 
 	public void setPrevisaoParaEntrega(LocalDate previsaoParaEntrega) {
 		this.previsaoParaEntrega = previsaoParaEntrega;
-	}
-
-	public String getEnderecoOrigem() {
-		return enderecoOrigem;
-	}
-
-	public void setEnderecoOrigem(String enderecoOrigem) {
-		this.enderecoOrigem = enderecoOrigem;
 	}
 
 	public String getEnderecoDestino() {
@@ -70,6 +66,14 @@ public class Entrega {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public List<EntregaOrigem> getOrigens() {
+		return origens;
+	}
+
+	public void setOrigens(List<EntregaOrigem> origens) {
+		this.origens = origens;
 	}
 	
 }

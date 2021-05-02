@@ -3,9 +3,16 @@ package fornecedor.produto.modelo;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import fornecedor.fornecedor.modelo.Fornecedor;
 
 @Entity
 public class Produto {
@@ -16,7 +23,10 @@ public class Produto {
 	
 	private String nome;
 	
-	private String estado;
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="fornecedorId")
+	private Fornecedor fornecedor;
 	
 	private String descricao;
 	
@@ -54,12 +64,11 @@ public class Produto {
 		this.preco = preco;
 	}
 
-	public String getEstado() {
-		return estado;
+	public Fornecedor getFornecedor() {
+		return fornecedor;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
-	
 }

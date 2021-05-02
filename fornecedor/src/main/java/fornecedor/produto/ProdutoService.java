@@ -13,7 +13,7 @@ public class ProdutoService {
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	
-	public List<Produto> getProdutosPorEstado(String estado) {
-		return produtoRepository.findByEstado(estado);
+	public List<Produto> getTodosProdutos() {
+		return (List<Produto>)produtoRepository.findAll();
 	}
 }

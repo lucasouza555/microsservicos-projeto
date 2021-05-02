@@ -9,7 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -24,14 +23,8 @@ public class Pedido {
 	@Enumerated(EnumType.STRING)
 	private PedidoStatus status;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "pedidoId")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private List<PedidoItem> itens;
-
-	public Pedido(List<PedidoItem> itens) {
-		this.itens = itens;
-		this.status = PedidoStatus.RECEBIDO;
-	}
 
 	public Pedido() {
 	}

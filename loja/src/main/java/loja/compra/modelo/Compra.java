@@ -21,7 +21,7 @@ public class Compra {
 	private String enderecoDestino;
 	private LocalDate dataParaEntrega;
 	private Long voucher;
-
+	
 	@Enumerated(EnumType.STRING)
 	private CompraSituacao situacao;
 

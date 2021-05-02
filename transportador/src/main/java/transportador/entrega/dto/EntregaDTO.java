@@ -1,6 +1,7 @@
 package transportador.entrega.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class EntregaDTO {
 
@@ -8,10 +9,10 @@ public class EntregaDTO {
 	
 	private LocalDate dataParaEntrega;
 	
-	private String enderecoOrigem;
-	
 	private String enderecoDestino;
-
+	
+	private List<EntregaOrigemDTO> origens;
+	
 	public Long getPedidoId() {
 		return pedidoId;
 	}
@@ -36,12 +37,11 @@ public class EntregaDTO {
 		this.enderecoDestino = enderecoDestino;
 	}
 
-	public String getEnderecoOrigem() {
-		return enderecoOrigem;
+	public List<EntregaOrigemDTO> getOrigens() {
+		return origens;
 	}
 
-	public void setEnderecoOrigem(String enderecoOrigem) {
-		this.enderecoOrigem = enderecoOrigem;
+	public void setOrigens(List<EntregaOrigemDTO> origens) {
+		this.origens = origens;
 	}
-	
 }
