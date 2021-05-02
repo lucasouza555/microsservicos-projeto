@@ -1,102 +1,114 @@
 {
-	"variables": [],
 	"info": {
+		"_postman_id": "e24a0662-ae36-4afa-a04b-2f0995af18ca",
 		"name": "endpoints",
-		"_postman_id": "f9a5c872-ae85-784e-7e34-f4c27b05a7e4",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Consulta apps eureka",
 			"request": {
-				"url": "http://localhost:8761/eureka/apps",
 				"method": "GET",
 				"header": [],
-				"body": {},
-				"description": ""
+				"url": {
+					"raw": "http://localhost:8761/eureka/apps",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8761",
+					"path": [
+						"eureka",
+						"apps"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Consulta config no github",
 			"request": {
-				"url": "http://localhost:8888/fornecedor/default",
 				"method": "GET",
 				"header": [],
-				"body": {},
-				"description": ""
+				"url": {
+					"raw": "http://localhost:8888/fornecedor/default",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"fornecedor",
+						"default"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Carrega informações pelo estado",
 			"request": {
-				"url": "http://localhost:8081/info/SP",
 				"method": "GET",
 				"header": [],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "Realiza compra",
-			"request": {
-				"url": "http://localhost:8080/compras",
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer dc6d5f0c-3b93-4644-b1fc-60c3e17a4749",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"itens\": [\n\t\t{\n\t\t\t\"id\": 1,\n\t\t\t\"quantidade\": 15\n\t\t},\n\t\t{\n\t\t\t\"id\": 2,\n\t\t\t\"quantidade\": 25\n\t\t}\n\t],\n\t\"endereco\": {\n\t\t\"logradouro\": \"Rua José Pinheiro\",\n\t\t\"tipo\":\"Rua\",\n\t\t\"numero\": 8923,\n\t\t\"estado\": \"SP\"\n\t}\n}"
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "Carrega uma compra",
-			"request": {
-				"url": "http://localhost:8080/compras/19",
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
+				"url": {
+					"raw": "http://localhost:5555/fornecedor/info/SP",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"fornecedor",
+						"info",
+						"SP"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Consulta rotas api gateway",
 			"request": {
-				"url": "http://localhost:5555/actuator/routes",
 				"method": "GET",
 				"header": [],
-				"body": {},
-				"description": ""
+				"url": {
+					"raw": "http://localhost:5555/actuator/routes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"actuator",
+						"routes"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Autenticação",
 			"request": {
-				"url": "localhost:8088/oauth/token",
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "lojapwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "loja",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Basic bG9qYTpsb2phcHdk",
-						"description": ""
+						"value": "Basic bG9qYTpsb2phcHdk"
 					}
 				],
 				"body": {
@@ -105,55 +117,253 @@
 						{
 							"key": "scope",
 							"value": "web",
-							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "grant_type",
 							"value": "password",
-							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "username",
 							"value": "lucas",
-							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "password",
 							"value": "lucaspwd",
-							"description": "",
 							"type": "text"
 						}
 					]
 				},
-				"description": ""
+				"url": {
+					"raw": "localhost:8088/oauth/token",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Carrega todos os produtos disponiveis para compra",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5555/fornecedor/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"fornecedor",
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Realiza compra",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "tokenType",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "accessToken",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "teste",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+						"key": "Authorization",
+						"value": "Bearer c0750a3d-02d7-4880-9f11-ccc311193a0e"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"itens\": [\n\t\t{\n\t\t\t\"id\": 1,\n\t\t\t\"quantidade\": 15\n\t\t},\n\t\t{\n\t\t\t\"id\": 2,\n\t\t\t\"quantidade\": 25\n\t\t}\n\t],\n\t\"endereco\": {\n\t\t\"logradouro\": \"José Pinheiro\",\n\t\t\"tipo\":\"Rua\",\n\t\t\"numero\": 8923,\n\t\t\"estado\": \"SP\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5555/loja/compras",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"loja",
+						"compras"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Carrega uma compra",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5555/loja/compras/19",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"loja",
+						"compras",
+						"19"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Reprocessa compra",
 			"request": {
-				"url": "http://localhost:8080/compras/5/reprocessamento",
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "tokenType",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "teste",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer dc6d5f0c-3b93-4644-b1fc-60c3e17a4749",
-						"description": ""
+						"value": "Bearer dc6d5f0c-3b93-4644-b1fc-60c3e17a4749"
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"itens\": [\n\t\t{\n\t\t\t\"id\": 1,\n\t\t\t\"quantidade\": 15\n\t\t},\n\t\t{\n\t\t\t\"id\": 2,\n\t\t\t\"quantidade\": 25\n\t\t}\n\t],\n\t\"endereco\": {\n\t\t\"logradouro\": \"Rua José Pinheiro\",\n\t\t\"tipo\":\"Rua\",\n\t\t\"numero\": 8923,\n\t\t\"estado\": \"SP\"\n\t}\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "http://localhost:5555/loja/compras/37/reprocessamento",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"loja",
+						"compras",
+						"37",
+						"reprocessamento"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancela compra",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "tokenType",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "teste",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer dc6d5f0c-3b93-4644-b1fc-60c3e17a4749",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5555/loja/compras/35",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"loja",
+						"compras",
+						"35"
+					]
+				}
 			},
 			"response": []
 		}
