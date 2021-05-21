@@ -24,3 +24,5 @@ public interface FornecedorClient {
 	@GetMapping("/pedidos/{id}/enderecos")
 	List<PedidoEnderecoItemDTO> getEnderecoItens(@PathVariable("id") Long id);
 }
+
+

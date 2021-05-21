@@ -2,6 +2,8 @@ package transportador.entrega;
 
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,13 @@ import transportador.entrega.modelo.EntregaOrigem;
 @Service
 public class EntregaService {
 	
+	private static final Logger LOG = LoggerFactory.getLogger(EntregaService.class);
+	
 	@Autowired
 	private EntregaRepository repository;
 
 	public VoucherDTO reservaEntrega(EntregaDTO pedidoDTO) {
-		
+		LOG.info("Realizando reserva da entrega");
 		Entrega entrega = new Entrega();
 		entrega.setDataParaBusca(pedidoDTO.getDataParaEntrega());
 		entrega.setPrevisaoParaEntrega(pedidoDTO.getDataParaEntrega().plusDays(1l));
