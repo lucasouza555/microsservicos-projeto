@@ -8,7 +8,7 @@ Como rodar:
 
 - Os principais endpoints estão no arquivo endpoints_postman.json basta importá-los no Postman
 
-- O sitema gira em torno desses endpoints "Realiza compra", "Reprocessa compra" e "Cancela compra".
+- O sistema gira em torno desses endpoints "Realiza compra", "Reprocessa compra" e "Cancela compra".
 
 O endpoint "Realiza compra" e "Reprocessa compra" recebem o mesmo json no corpo da requisição que é basicamente um array de itens, 
 onde o id desses itens é o id da tabela produto do banco fornecedor.
